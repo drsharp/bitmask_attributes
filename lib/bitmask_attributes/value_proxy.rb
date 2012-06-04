@@ -1,11 +1,10 @@
 module BitmaskAttributes
   class ValueProxy < Array
       
-    def initialize(record, attribute, &extension)
+    def initialize(record, attribute)
       @record = record
       @attribute = attribute
       find_mapping
-      instance_eval(&extension) if extension
       super(extract_values)
     end
     

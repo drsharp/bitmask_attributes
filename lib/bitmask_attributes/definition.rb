@@ -1,11 +1,10 @@
 module BitmaskAttributes
   class Definition
-    attr_reader :attribute, :values, :allow_null, :zero_value, :extension
+    attr_reader :attribute, :values, :allow_null, :zero_value
     
-    def initialize(attribute, values=[],allow_null = true,zero_value = nil, &extension)
+    def initialize(attribute, values=[],allow_null = true,zero_value = nil)
       @attribute = attribute
       @values = values
-      @extension = extension
       @allow_null = allow_null
       @zero_value = zero_value
     end
@@ -49,7 +48,7 @@ module BitmaskAttributes
       def override_getter_on(model)
         model.class_eval %(
           def #{attribute}
-            @#{attribute} ||= BitmaskAttributes::ValueProxy.new(self, :#{attribute}, &self.class.bitmask_definitions[:#{attribute}].extension)
+            @#{attribute} ||= BitmaskAttributes::ValueProxy.new(self, :#{attribute})
           end
         )
       end
